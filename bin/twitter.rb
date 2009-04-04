@@ -17,9 +17,9 @@ cgi.out(
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       html = ""
       Bot.tl.each do |screen_name, text|
-        html += "<br><b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
+        html += "<b><font color=red>" + screen_name + "</font></b><br>"
+        html += text.toutf8.gsub!(/http/, "<font color=blue>http</font>") + "<br><hr>"
       end
-      html.gsub!(/http/, "<font color=blue>http</font>")
       html.gsub!(/@/, "<font color=blue>@</font>")
       CGI.unescapeHTML(html)
     end
