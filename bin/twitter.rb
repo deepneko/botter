@@ -20,7 +20,7 @@ cgi.out(
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end
       html.gsub!(/http/, "<font color=blue>http</font>")
-      html.gsub!(/@/, "<font color=blue>@</font>")
+      html.gsub!(/(@\w+)/, "<font color=blue>#$1</font>")
       CGI.unescapeHTML(html)
     end
   end
