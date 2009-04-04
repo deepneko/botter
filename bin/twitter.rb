@@ -14,7 +14,7 @@ cgi.out(
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       html = "<html><head>twitter</head><body>"
-      Bot.tl(1).each do |screen_name, text|
+      Bot.tl(0).each do |screen_name, text|
         html += "<br>" + screen_name + "<br>" + text + "<br><hr>"
       end
       html += "</body></html>"
