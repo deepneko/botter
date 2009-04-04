@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'bot'
 $KCODE='u'
-CGI.unescapeHTML("&#x3042;")
+#CGI.unescapeHTML("&#x3042;")
 
 cgi = CGI.new('html4')
 keyword = cgi.params['update'][0]
@@ -19,7 +19,7 @@ cgi.out(
       Bot.tl.each do |screen_name, text|
         html += "<br>" + screen_name + "<br>" + text.toutf8 + "<br><hr>"
       end
-      html
+      CGI.unescapeHTML(html)
     end
   end
 end
