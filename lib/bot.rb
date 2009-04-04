@@ -21,11 +21,11 @@ module Bot
     bot.start
   end
 
-  def self.tl(page, tlnum=100)
-    rowid = $con.execute("select rowid from friends_timeline order by rowid desc limit 1").flatten.join.to_i
+  def self.tl(page=1, tlnum=100)
+    status_id = $con.execute("select status_id from friends_timeline order by status_id desc limit #{tlnum*page}").flatten[tlnum*(page-1)].join.to_i
     tl = ""
     begin
-      tl = $con.execute("select screen_name, text from friends_timeline where rowid<=\'#{rowid-tlnum*page}\' order by rowid desc limit #{tlnum}")
+      tl = $con.execute("select screen_name, text from friends_timeline where status_id<=\'#{status_id}\' order by status_id desc limit #{tlnum}")
     rescue SQLite3::SQLException
     end
     tl
