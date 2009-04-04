@@ -19,8 +19,8 @@ cgi.out(
       Bot.tl.each do |screen_name, text|
         html += "<br><b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end
-      html.gsub(/http/, "<font color=blue>http</font>")
-      html.gsub(/@/, "<font color=blue>@</font>")
+      html.gsub!(/http/, "<font color=blue>http</font>")
+      html.gsub!(/@/, "<font color=blue>@</font>")
       CGI.unescapeHTML(html)
     end
   end
