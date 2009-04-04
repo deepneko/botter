@@ -23,7 +23,7 @@ module Bot
             update_status.each do |tl|
               begin
                 p "insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")"
-                $con.execute("insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"].toutf8}\")")
+                $con.execute("insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")")
               rescue SQLite3::SQLException
                 print "Exception:" + tl["status_id"] + " " + tl["screen_name"] + " " + tl["created_at"] + " " + tl["text"] + "\n"
               end
