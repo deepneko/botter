@@ -3,9 +3,9 @@
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'bot'
 $KCODE='u'
+CGI.unescapeHTML("&#x3042;")
 
 cgi = CGI.new('html4')
-cgi.unescapeHTML("&#x3042;")
 keyword = cgi.params['update'][0]
 page = cgi.params['page'][0]
 
