@@ -3,11 +3,11 @@
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'bot'
 $KCODE='u'
-#CGI.unescapeHTML("&#x3042;")
 
 cgi = CGI.new('html4')
-keyword = cgi.params['update'][0]
+comment = cgi.params['comment'][0]
 page = cgi.params['page'][0]
+link_only = cgi.params['link'][0]
 
 cgi.out(
         "type"	=> "text/html" ,
@@ -15,7 +15,7 @@ cgi.out(
         ) do
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
-      html = ""
+      html = $form
       Bot.tl.each do |screen_name, text|
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end

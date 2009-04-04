@@ -13,6 +13,15 @@ module Bot
   $const = Bot::BotConst.new
   $con = SQLite3::Database.new($const.DB)
 
+  $form = <<"FORM"
+What are you doing?<br>
+<form action="./twitter.cgi" method="get">
+<input type="text" name="comment"><br>
+<input type="submit" value="update">
+</form>
+<hr>
+FORM
+
   def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
     twitter_client = Bot::TwitterAPI.new(user, pass)
     bot = Bot::Daemon.new(twitter_client)
