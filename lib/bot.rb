@@ -1,3 +1,4 @@
+require 'cgi'
 require 'rubygems'
 require 'sqlite3'
 require 'open-uri'
