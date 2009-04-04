@@ -13,6 +13,7 @@ cgi.out(
         ) do
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
+      html = ""
       Bot.tl.each do |screen_name, text|
         html += "<br>" + screen_name + "<br>" + text.tosjis + "<br><hr>"
       end
