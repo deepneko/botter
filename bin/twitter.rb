@@ -44,7 +44,8 @@ cgi.out(
         debug = Bot.update(user, pass, comment)
       end
 
-      html = $form + $link + user + pass + debug.to_s
+      debug = "moe" if !debug
+      html = $form + $link + user + pass + debug
       Bot.tl(page).each do |screen_name, text|
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end
