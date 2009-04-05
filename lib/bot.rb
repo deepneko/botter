@@ -23,7 +23,7 @@ module Bot
   end
 
   def self.tl(page, tlnum=100)
-    status_id = $con.execute("select status_id from friends_timeline order by status_id desc limit #{tlnum*page}").flatten[tlnum*(page.to_i-1)]
+    status_id = $con.execute("select status_id from friends_timeline order by status_id desc limit #{tlnum*page}").flatten[tlnum.to_i*(page.to_i-1)]
     tl = ""
     begin
       tl = $con.execute("select screen_name, text from friends_timeline where status_id<=\'#{status_id}\' order by status_id desc limit #{tlnum}")
