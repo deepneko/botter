@@ -47,7 +47,8 @@ cgi.out(
       end
       html += $link
       #html.gsub!(/(http)/) { "<font color=blue>#$1</font>" }
-      URI.regexp(html) { |link| html.gsub(/#{link}/, "http") }
+      uri_re = URI.regexp(['http', 'https']
+      html.gsub!(uri_re, "http")
       html.gsub!(/(@\w+)/) { "<font color=blue>#$1</font>" }
       CGI.unescapeHTML(html)
     end
