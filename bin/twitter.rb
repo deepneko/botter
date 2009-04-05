@@ -42,6 +42,8 @@ cgi.out(
         debug = Bot.update(user, pass, comment)
       end
 
+      user = "hoge" if !user
+      pass = "moge" if !pass
       debug = "moe" if !debug
       html = $form + $link + user + pass + debug
       Bot.tl(page).each do |screen_name, text|
