@@ -39,7 +39,7 @@ cgi.out(
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       debug = "uoo"
       if user and pass and comment
-        debug = Bot.update(user, pass, CGI.unescapeHTML(CGI.escape(comment)))
+        debug = Bot.update(user, pass, CGI.unescapeHTML(comment))
       end
 
       html = $form + $link + user + pass + debug
