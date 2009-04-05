@@ -47,6 +47,7 @@ module Bot
         end
       end
       ret += "momo"
+      ret
     end
   end
 end
