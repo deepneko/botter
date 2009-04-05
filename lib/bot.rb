@@ -20,6 +20,7 @@ What are you doing?<br>
 <input type="submit" value="update">
 </form>
 <hr>
+<a href="./twitter.cgi">home</a>
 FORM
 
   def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
