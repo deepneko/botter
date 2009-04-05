@@ -39,10 +39,9 @@ cgi.out(
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       debug = "uoo"
       if user and pass and comment
-        debug = Bot.update(user, pass, comment)
+        debug = Bot.update(user, pass, comment.tosjis)
       end
 
-      debug = "moe" if !debug
       html = $form + $link + user + pass + debug
       Bot.tl(page).each do |screen_name, text|
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"

@@ -35,7 +35,6 @@ module Bot
   def self.update(user, pass, comment)
     twitter_client = Bot::TwitterAPI.new(user, pass)
     twitter_client.update(comment)
-    return pass
   end
 
   def self.createtable
