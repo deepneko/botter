@@ -33,7 +33,7 @@ $link = "<a href=\"./twitter.rb?user=#{user}&pass=#{pass}\">home</a>
 
 cgi.out(
         "type"	=> "text/html" ,
-        "charset"	=> "Shift-JIS"
+        "charset"	=> "UTF-8"
         ) do
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
