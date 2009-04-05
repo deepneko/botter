@@ -25,7 +25,6 @@ What are you doing?<br>
 FORM
 
 $link = <<"LINK"
-<hr>
 <a href=\"./twitter.rb\">home</a>
  <a href=\"./twitter.rb?page=#{new_page}\">prev</a>
  <a href=\"./twitter.rb?page=#{old_page}\">next</a>
