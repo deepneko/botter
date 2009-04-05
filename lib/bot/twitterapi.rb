@@ -39,7 +39,7 @@ module Bot
       @agent = login(@user, @pass)
 
       res = @agent.post(@const.TWITTER_UPDATE, { 'status' => text })
-      ret = nil
+      ret = ""
       if res.code == '200'
         doc = Hpricot(res.body)
         (doc/:status).each do |status|
