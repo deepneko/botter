@@ -13,16 +13,6 @@ module Bot
   $const = Bot::BotConst.new
   $con = SQLite3::Database.new($const.DB)
 
-  $form = <<"FORM"
-What are you doing?<br>
-<form action="./twitter.cgi" method="get">
-<input type="text" name="comment"><br>
-<input type="submit" value="update">
-</form>
-<hr>
-<a href="./twitter.cgi">home</a>
-FORM
-
   def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
     twitter_client = Bot::TwitterAPI.new(user, pass)
     bot = Bot::Daemon.new(twitter_client)
@@ -32,7 +22,7 @@ FORM
     bot.start
   end
 
-  def self.tl(page=1, tlnum=100)
+  def self.tl(page, tlnum=100)
     status_id = $con.execute("select status_id from friends_timeline order by status_id desc limit #{tlnum*page}").flatten[tlnum*(page-1)]
     tl = ""
     begin
