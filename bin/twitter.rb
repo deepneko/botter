@@ -38,12 +38,10 @@ cgi.out(
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       debug = "uoo"
-      #if user and pass and comment
-      #  debug = Bot.update(user, pass, comment)
-      #end
+      if user and pass and comment
+        debug = Bot.update(user, pass, comment)
+      end
 
-      user = "hoge" if !user
-      pass = "moge" if !pass
       debug = "moe" if !debug
       html = $form + $link + user + pass + debug
       Bot.tl(page).each do |screen_name, text|
