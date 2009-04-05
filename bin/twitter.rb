@@ -46,7 +46,8 @@ cgi.out(
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end
       html += $link
-      html.gsub!(/(http)/) { "<font color=blue>#$1</font>" }
+      #html.gsub!(/(http)/) { "<font color=blue>#$1</font>" }
+      URI.regexp(html) { |link| html.gsub(/#{link}/, "http") }
       html.gsub!(/(@\w+)/) { "<font color=blue>#$1</font>" }
       CGI.unescapeHTML(html)
     end
