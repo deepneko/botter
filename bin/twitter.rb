@@ -37,12 +37,11 @@ cgi.out(
         ) do
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
-      debug = "uoo"
       if user and pass and comment
-        debug = Bot.update(user, pass, CGI.unescapeHTML(comment).toutf8)
+        Bot.update(user, pass, CGI.unescapeHTML(comment).toutf8)
       end
 
-      html = $form + $link + user + pass + debug
+      html = $form + $link
       Bot.tl(page).each do |screen_name, text|
         html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
       end
