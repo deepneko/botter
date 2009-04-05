@@ -18,20 +18,16 @@ new_page = page.to_i-1
 new_page = 1 if new_page == 0
 link_only = cgi.params['link'][0]
 
-$form = <<"FORM"
-What are you doing?<br>
-<form action="./twitter.rb?user=#{user}&pass=#{pass}" method="get">
-<input type="text" name="comment"><br>
-<input type="submit" value="update">
-</form>
-FORM
+$form = "What are you doing?<br>
+<form action=\"./twitter.rb?user=#{user}&pass=#{pass}\" method=\"get\">
+<input type=\"text\" name=\"comment\"><br>
+<input type=\"submit\" value=\"update\">
+</form>"
 
-$link = <<"LINK"
-<a href=\"./twitter.rb?user=#{user}&pass=#{pass}\">home</a>
+$link = "<a href=\"./twitter.rb?user=#{user}&pass=#{pass}\">home</a>
  <a href=\"./twitter.rb?user=#{user}&pass=#{pass}&page=#{new_page}\">prev</a>
  <a href=\"./twitter.rb?user=#{user}&pass=#{pass}&page=#{old_page}\">next</a>
-<hr>
-LINK
+<hr>"
 
 cgi.out(
         "type"	=> "text/html" ,
