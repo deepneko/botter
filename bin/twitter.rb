@@ -20,8 +20,8 @@ link_only = cgi.params['link'][0]
 
 $form = "What are you doing?<br>
 <form action=\"./twitter.rb\" method=\"get\">
-<input type=\"hidden\" name=\"user\">
-<input type=\"hidden\" name=\"pass\">
+<input type=\"hidden\" name=\"user\" value=\"#{user}\">
+<input type=\"hidden\" name=\"pass\" value=\"#{pass}\">
 <input type=\"text\" name=\"comment\"><br>
 <input type=\"submit\" value=\"update\">
 </form>"
