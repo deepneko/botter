@@ -5,6 +5,8 @@ require 'bot'
 $KCODE='u'
 
 cgi = CGI.new('html4')
+user = cgi.params['user'][0]
+pass = cgi.params['pass'][0]
 comment = cgi.params['comment'][0]
 if cgi.params['page'][0]
   page = cgi.params['page'][0]
@@ -18,7 +20,7 @@ link_only = cgi.params['link'][0]
 
 $form = <<"FORM"
 What are you doing?<br>
-<form action="./twitter.cgi" method="get">
+<form action="./twitter.rb" method="get">
 <input type="text" name="comment"><br>
 <input type="submit" value="update">
 </form>
@@ -39,7 +41,7 @@ cgi.out(
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       debug = "uoo"
       if comment
-        debug = Bot.update(comment)
+        debug = Bot.update(user, pass, comment)
       end
 
       html = $form + $link + debug
