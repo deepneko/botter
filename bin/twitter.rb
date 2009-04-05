@@ -40,7 +40,7 @@ cgi.out(
   cgi.html do
     cgi.head{ cgi.title{'twitter'} } + cgi.body do
       debug = "uoo"
-      if comment
+      if user and pass and comment
         debug = Bot.update(user, pass, comment)
       end
 
