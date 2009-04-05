@@ -46,7 +46,7 @@ module Bot
           ret = (status/:created_at).inner_html
         end
       end
-      ret
+      ret += "momo"
     end
   end
 end
