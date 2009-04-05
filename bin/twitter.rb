@@ -11,6 +11,9 @@ if cgi.params['page'][0]
 else
   page = 1
 end
+old_page = page + 1
+new_page = page - 1
+new_page = 1 if new_page = 0
 link_only = cgi.params['link'][0]
 
 $form = <<"FORM"
@@ -24,8 +27,8 @@ FORM
 $link = <<"LINK"
 <hr>
 <a href=\"./twitter.rb\">home</a>
- <a href=\"./twitter.rb?page=#{page}\">new</a>
- <a href=\"./twitter.rb?page=#{page}\">old</a>
+ <a href=\"./twitter.rb?page=#{new_page}\">prev</a>
+ <a href=\"./twitter.rb?page=#{old_page}\">next</a>
 <hr>
 LINK
 
