@@ -12,10 +12,11 @@ require 'bot/daemon'
 module Bot
   $const = Bot::BotConst.new
   $con = SQLite3::Database.new($const.DB)
+  $twitter_client
 
   def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
-    twitter_client = Bot::TwitterAPI.new(user, pass)
-    bot = Bot::Daemon.new(twitter_client)
+    $twitter_client = Bot::TwitterAPI.new(user, pass)
+    bot = Bot::Daemon.new($twitter_client)
     #1.upto($const.PAGE_HISTORY) do |page|
     #  p twitter_client.friends_timeline(page, 897098556)
     #end
@@ -30,6 +31,10 @@ module Bot
     rescue SQLite3::SQLException
     end
     tl
+  end
+
+  def self.update(comment)
+    $twitter_client.update(comment) if $twitter_client
   end
 
   def self.createtable

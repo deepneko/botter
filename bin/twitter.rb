@@ -11,8 +11,8 @@ if cgi.params['page'][0]
 else
   page = 1
 end
-old_page = page.to_i + 1
-new_page = page.to_i - 1
+old_page = page.to_i+1
+new_page = page.to_i-1
 new_page = 1 if new_page == 0
 link_only = cgi.params['link'][0]
 
