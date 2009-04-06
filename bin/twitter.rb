@@ -29,6 +29,7 @@ $form = "What are you doing?<br>
 $link = "<a href=\"./twitter.rb?user=#{user}&pass=#{pass}\">home</a>
  <a href=\"./twitter.rb?user=#{user}&pass=#{pass}&page=#{new_page}\">prev</a>
  <a href=\"./twitter.rb?user=#{user}&pass=#{pass}&page=#{old_page}\">next</a>
+ <a href=\"./twitter.rb?user=#{user}&pass=#{pass}&link=1\">link</a>
 <hr>"
 
 cgi.out(
@@ -42,8 +43,16 @@ cgi.out(
       end
 
       html = $form + $link
-      Bot.tl(page).each do |screen_name, text|
-        html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
+      if link_only
+        Bot.tl(page, 500).each do |screen_name, text|
+          if text =~ URI.regexp(['http', 'https'])
+            html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
+          end
+        end
+      else
+        Bot.tl(page).each do |screen_name, text|
+          html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
+        end
       end
       html += $link
       html.gsub!(URI.regexp(['http', 'https'])) { "<a href=\"#{$&}\" target=\"_blank\">#{$&}</a>" }
