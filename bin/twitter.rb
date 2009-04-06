@@ -44,7 +44,7 @@ cgi.out(
 
       html = $form + $link
       if link_only
-        Bot.tl(page, 500).each do |screen_name, text|
+        Bot.tl(page, 1000).each do |screen_name, text|
           if text =~ URI.regexp(['http', 'https'])
             html += "<b><font color=red>" + screen_name + "</font></b><br>" + text.toutf8 + "<br><hr>"
           end
