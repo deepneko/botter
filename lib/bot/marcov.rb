@@ -7,6 +7,10 @@ module Marcov
     attr_reader :pref
     MULTIPLIER = 31
 
+    def initialize(p)
+      @pref = p
+    end
+
     def initialize(n, str)
       @pref = []
       n.times do
@@ -70,6 +74,7 @@ module Marcov
       nwords.times do
         s = @statetable[prefix]
         r = rand % s.size
+        p r
         suf = s[r]
         break if suf == NONWORD
         p suf
