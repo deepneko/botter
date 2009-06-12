@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require 'MeCab'
 
@@ -41,17 +41,15 @@ module Marcov
     def build(str)
       begin
         c = MeCab::Tagger.new(str)
-
         p c.parse(str)
-
         n = c.parseToNode(str)
         while n do
-          print n.surface,  "\t", n.feature, "\t", n.cost, "\n"
+          add(n.surface)
+          #print n.surface,  "\t", n.feature, "\t", n.cost, "\n"
           n = n.next
         end
-        print "EOS\n";
       rescue
-        print "RuntimeError: ", $!, "\n";
+        p "RuntimeError: ", $!;
       end
     end
 
@@ -84,7 +82,7 @@ module Marcov
   def self.markov(data, nwords=10000)
     chain = Chain.new
     chain.build(data)
-    #chain.generate(nwords)
+    chain.generate(nwords)
   end
 end
 
