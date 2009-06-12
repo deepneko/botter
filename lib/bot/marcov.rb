@@ -3,19 +3,19 @@
 require 'MeCab'
 
 module Marcov
-  class Prefix
-    attr_reader :pref
-    MULTIPLIER = 31
+  NPREF = 2
+  NONWORD = "\n"
+  MULTIPLIER = 31
 
-    def initialize(p)
-      @pref = p
+  class Prefix
+    attr_accessor :pref
+
+    def initialize(n=NPREF, str=NONWORD)
+        @pref = Array.new(n){str}
     end
 
-    def initialize(n, str)
-      @pref = []
-      n.times do
-        @pref << str
-      end
+    def copy(p)
+      @pref = p.pref.clone
     end
 
     def hashcode
@@ -23,6 +23,7 @@ module Marcov
       @pref.each do |p|
         h = MULTIPLIER * h + p.hashcode
       end
+      h
     end
 
     def equals(p)
@@ -34,12 +35,10 @@ module Marcov
   end
 
   class Chain
-    NPREF = 2
-    NONWORD = "\n"
-
     def initialize
       @statetable = {}
-      @prefix = Prefix.new(NPREF, NONWORD)
+      @statetable.default = []
+      @prefix = Prefix.new
     end
 
     def build(str)
@@ -55,26 +54,27 @@ module Marcov
       rescue
         p "RuntimeError: ", $!;
       end
+      add(NONWORD)
     end
 
     def add(word)
-      suf = @statetab[prefix]
+      suf = @statetable[@prefix.pref]
       if !suf
         suf = []
-        @statetable[Prefix.new(prefix)] = suf
+        p = Prefix.new
+        @statetable[p.pref] = suf
       end
 
       suf << word
-      prefix.pref.shift
-      prefix.pref << word
+      @prefix.pref.shift
+      @prefix.pref << word
     end
 
     def generate(nwords)
-      prefix = Prefix.new(NPREF, NONWORD)
+      prefix = Prefix.new
       nwords.times do
-        s = @statetable[prefix]
+        s = @statetable[prefix.pref]
         r = rand % s.size
-        p r
         suf = s[r]
         break if suf == NONWORD
         p suf
@@ -92,3 +92,5 @@ module Marcov
 end
 
 Marcov.markov(open($*[0]).read)
+
+
