@@ -75,6 +75,7 @@ module Marcov
       nwords.times do
         s = @statetable[prefix.pref]
         r = rand % s.size
+        p r
         suf = s[r]
         break if suf == NONWORD
         p suf
