@@ -88,5 +88,4 @@ module Marcov
   end
 end
 
-#Marcov.markov(open($*[0]).read)
-Marcov.markov("すもももももももものうち")
+Marcov.markov(open($*[0]).read)
