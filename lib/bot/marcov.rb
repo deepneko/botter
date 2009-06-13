@@ -2,6 +2,7 @@
 
 require 'MeCab'
 require 'CGI'
+$KCODE = 'u'
 
 module Marcov
   NPREF = 2
