@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'MeCab'
-require 'CGI'
+require 'cgi'
 $KCODE = 'u'
 
 module Marcov
