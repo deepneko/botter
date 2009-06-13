@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'MeCab'
+require 'CGI'
 
 module Marcov
   NPREF = 2
@@ -49,7 +50,7 @@ module Marcov
         r = rand(31) % s.size
         suf = s[r]
         break if suf == NONWORD
-        p suf
+        p CGI.unescapeHTML(suf)
         @prefix.shift
         @prefix << suf
       end
