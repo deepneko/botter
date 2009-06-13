@@ -5,40 +5,12 @@ require 'MeCab'
 module Marcov
   NPREF = 2
   NONWORD = "\n"
-  MULTIPLIER = 31
-
-  class Prefix
-    attr_accessor :pref
-
-    def initialize(n=NPREF, str=NONWORD)
-        @pref = Array.new(n){str}
-    end
-
-    def copy(p)
-      @pref = p.pref.clone
-    end
-
-    def hashcode
-      h = 0
-      @pref.each do |p|
-        h = MULTIPLIER * h + p.hashcode
-      end
-      h
-    end
-
-    def equals(p)
-      @pref.size.times do |i|
-        return false if !@pref[i].equals(p.pref[i])
-      end
-      return true
-    end
-  end
 
   class Chain
     def initialize
       @statetable = {}
       @statetable.default = []
-      @prefix = Prefix.new
+      @prefix = []
     end
 
     def build(str)
@@ -58,29 +30,28 @@ module Marcov
     end
 
     def add(word)
-      suf = @statetable[@prefix.pref]
+      suf = @statetable[@prefix]
       if !suf
         suf = []
-        p = Prefix.new
-        @statetable[p.pref] = suf
+        pref = Array.new(NPREF){NONWORD}
+        @statetable[pref] = suf
       end
 
       suf << word
-      @prefix.pref.shift
-      @prefix.pref << word
+      @prefix.shift
+      @prefix << word
     end
 
     def generate(nwords)
-      prefix = Prefix.new
+      @prefix = Array.new(NPREF){NONWORD}
       nwords.times do
-        s = @statetable[prefix.pref]
-        r = rand % s.size
-        p r
+        s = @statetable[@prefix]
+        r = rand(31) % s.size
         suf = s[r]
         break if suf == NONWORD
         p suf
-        prefix.pref.shift
-        prefix.pref << suf
+        @prefix.shift
+        @prefix << suf
       end
     end
   end
