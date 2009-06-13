@@ -65,6 +65,6 @@ module Marcov
   end
 end
 
-Marcov.markov(open($*[0]).read)
+Marcov.markov(open($*[0]).read, $*[1].to_i)
 
 
