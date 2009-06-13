@@ -18,11 +18,11 @@ module Marcov
     def build(str)
       begin
         c = MeCab::Tagger.new(str)
-        p c.parse(str)
+        #p c.parse(str)
         n = c.parseToNode(str)
         while n do
           add(n.surface)
-          print n.surface,  "\t", n.feature, "\t", n.cost, "\n"
+          print n.surface, "\t", n.feature, "\t", n.cost, "\n"
           n = n.next
         end
       rescue
@@ -51,7 +51,7 @@ module Marcov
         r = rand(31) % s.size
         suf = s[r]
         break if suf == NONWORD
-        p CGI.unescapeHTML(suf)
+        #p CGI.unescapeHTML(suf)
         @prefix.shift
         @prefix << suf
       end
