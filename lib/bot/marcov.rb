@@ -51,7 +51,7 @@ module Marcov
         r = rand(31) % s.size
         suf = s[r]
         break if suf == NONWORD
-        p CGI.unescapeHTML(suf)
+        print CGI.unescapeHTML(suf)
         @prefix.shift
         @prefix << suf
       end
