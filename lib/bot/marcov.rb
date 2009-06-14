@@ -26,7 +26,7 @@ module Marcov
         @words.size.times do |i|
           p_word = n_word = @words[i]
           j = i
-          while size(p_word) > NSIZE
+          while p_word.split(//) > NSIZE
             j = j + 1
             n_word += @words[j] if j < @words.size
           end
@@ -37,10 +37,6 @@ module Marcov
       end
 
       p @statetable
-    end
-
-    def size(str)
-      str.split(//)
     end
 
     def generate(nwords)
