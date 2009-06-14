@@ -14,7 +14,7 @@ module Marcov
       @statetable.default = []
     end
 
-    def build(str, n)
+    def build(str)
       begin
         mecab = MeCab::Tagger.new(str)
         n = mecab.parseToNode(str)
