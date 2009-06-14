@@ -45,9 +45,9 @@ module Marcov
       end
     end
 
-    def ignore
-      return false if @ignore.
-      return false if @word ~= /^[-.0-9]$/
+    def ignore(word)
+      return false if @ignore.include?(word)
+      return false if @words ~= /^[-.0-9]$/
     end
 
     def generate(nwords)
