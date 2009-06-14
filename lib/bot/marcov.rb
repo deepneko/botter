@@ -9,6 +9,10 @@ module Bot
     end
 
     def build(str)
+      str.gsub!(URI.regexp(['http', 'https'])) { "" }
+      str.gsub!(/(@\w+)/) { "" }
+      str.gsub!(/RT\s+@\w+:/) { "" }
+
       @words = []
       @statetable = Hash.new{[]}
 
