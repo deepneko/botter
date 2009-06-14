@@ -35,7 +35,9 @@ module Marcov
           @statetable[p_word] << n_word if n_word
         end
 
-        p @statetable
+        @statetable.each do |a|
+          p a
+        end
       rescue
         p "RuntimeError: ", $!;
       end
