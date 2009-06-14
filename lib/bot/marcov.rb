@@ -43,6 +43,7 @@ module Bot
 
     def learn
       p @statetable
+      exit
       @statetable.keys.each do |p_word, nexts|
         nexts.each do |n_word, last_word|
           begin
