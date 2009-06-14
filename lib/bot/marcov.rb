@@ -41,14 +41,17 @@ module Marcov
           h = { n_word => last_word }
           a = @statetable[@words[i]]
           a << h
-          print i.to_s + ":"
-          print a
-          print "\n"
+          #print i.to_s + ":"
+          #print a
+          #print "\n"
           @statetable[p_word] = a
 
           # @statetable[p_word] << { n_word => last_word }
           # p @statetable[p_word]
         end
+
+        p @statetable["aaaa"]
+        p @statetable["llll"]
       rescue
         print "Exception: ", $!;
       end
