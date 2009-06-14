@@ -8,6 +8,23 @@ module Marcov
   NPREF = 2
   NONWORD = "\n"
 
+  class Ngram
+    def create_table(str, n)
+      list = str.gsub(/\n|\r/, '').split(//)
+      result = Hash.new
+      prev = nil
+      0.upto(list.size - n) do |counter|
+        token = list[counter..counter+n-1].join('')
+        if prev
+          result[prev] = [] unless result[prev]
+          result[prev] << token
+        end
+        prev = token
+      end
+      result
+    end
+  end
+
   class Chain
     def initialize
       @statetable = {}
@@ -18,11 +35,10 @@ module Marcov
     def build(str)
       begin
         c = MeCab::Tagger.new(str)
-        #p c.parse(str)
         n = c.parseToNode(str)
         while n do
           add(n.surface)
-          print n.surface, "\t", n.feature, "\t", n.cost, "\n"
+          #print n.surface, "\t", n.feature, "\t", n.cost, "\n"
           n = n.next
         end
       rescue
@@ -66,5 +82,4 @@ module Marcov
 end
 
 Marcov.markov(open($*[0]).read, $*[1].to_i)
-
 
