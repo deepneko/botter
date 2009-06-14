@@ -5,7 +5,7 @@ require 'cgi'
 $KCODE = 'u'
 
 module Marcov
-  WORD_SIZE = 4
+  WORD_SIZE = 3
   WORD_NUM = 3
 
   class Chain
@@ -13,7 +13,9 @@ module Marcov
       @words = []
       @statetable = {}
       @statetable.default = []
+
       @ignore = ["", "\n", "/", "\"", "'", "`", "^", ".", ",", "[", "]", "「", "」", "(", ")", "｢", "｣", "{", "}", "（", "）", "【", "】", "<", ">", "‘", "’", "『", "』", "“", "”", "〔", "〕",]
+      @end = ["。", " ", "　"]
     end
 
     def build(str)
@@ -29,25 +31,19 @@ module Marcov
         0.upto(@words.size-2) do |i|
           j = i + 1
           p_word = @words[i]
-          n_word = @words[j]
+          n_word = last_word = @words[j]
           while n_word.split(//).size < WORD_SIZE
             j = j + 1
             break if j-i > WORD_NUM
-            n_word += @words[j].to_s
+            last_word = @words[j].to_s
+            n_word += last_word
           end
-          @statetable[p_word] << n_word
+          @statetable[p_word] << { n_word => last_word }
+          p @statetable[p_word]
         end
-
-        p @words
-        p @statetable
       rescue
         print "Exception: ", $!;
       end
-    end
-
-    def ignore(word)
-      return false if @ignore.include?(word)
-      return false if word =~ /^[-.0-9]$/
     end
 
     def generate(nwords)
