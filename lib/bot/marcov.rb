@@ -26,7 +26,7 @@ module Marcov
         @words.size.times do |i|
           p_word = n_word = @words[i]
           j = i
-          while size(prev) > NSIZE
+          while size(p_word) > NSIZE
             j = j + 1
             n_word += @words[j] if j < @words.size
           end
