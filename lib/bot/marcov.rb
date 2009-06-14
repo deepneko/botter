@@ -32,7 +32,7 @@ module Marcov
             break if j-i > 3
             n_word += @words[j].to_s
           end
-          @statetable[p_word] << n_word if n_word
+          @statetable[p_word] << n_word
         end
       rescue
         p "RuntimeError: ", $!;
