@@ -9,6 +9,7 @@ module Bot
     end
 
     def build(str)
+      p str
       @words = []
       @statetable = Hash.new{[]}
 
