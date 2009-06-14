@@ -11,7 +11,7 @@ module Marcov
   class Chain
     def initialize
       @words = []
-      @statetable = {}
+      @statetable = Hash.new
       @statetable.default = []
 
       @ignore = ["", "\n", "/", "\"", "'", "`", "^", ".", ",", "[", "]", "「", "」", "(", ")", "｢", "｣", "{", "}", "（", "）", "【", "】", "<", ">", "‘", "’", "『", "』", "“", "”", "〔", "〕",]
@@ -38,8 +38,8 @@ module Marcov
             last_word = @words[j].to_s
             n_word += last_word
           end
-          @statetable[p_word] << { n_word => last_word }
-          p @statetable[p_word]
+          @statetable[p_word.to_s] << { n_word => last_word }
+          p @statetable[p_word.to_s]
         end
       rescue
         print "Exception: ", $!;
