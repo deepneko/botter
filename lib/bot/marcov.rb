@@ -5,7 +5,7 @@ require 'cgi'
 $KCODE = 'u'
 
 module Marcov
-  WORD_SIZE = 3
+  WORD_SIZE = 4
 
   class Chain
     def initialize
@@ -19,7 +19,7 @@ module Marcov
         mecab = MeCab::Tagger.new(str)
         n = mecab.parseToNode(str)
         while n do
-          @words << n.surface
+          @words << n.surface.strip
           n = n.next
         end
 
@@ -32,13 +32,12 @@ module Marcov
             break if j-i > 3
             n_word += @words[j].to_s
           end
-          @statetable[p_word] << n_word
+          @statetable[p_word] << n_word if n_word
+          p n_word
         end
       rescue
         p "RuntimeError: ", $!;
       end
-
-      p @statetable
     end
 
     def generate(nwords)
