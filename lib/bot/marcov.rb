@@ -42,8 +42,8 @@ module Bot
     end
 
     def learn
-      @statetable.keys.each do |p_word, nexts|
-        nexts.each do |n_word, last_word|
+      @statetable.keys.each do |p_word|
+        @statetable[p_word].each do |n_word, last_word|
           begin
             cur = $con.execute("select * from learn_ngram where word=#{p_word} and #{last_word}").flatten
             p cur
