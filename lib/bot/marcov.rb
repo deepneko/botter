@@ -35,7 +35,6 @@ module Bot
             last_word = @words[j].to_s
             n_word += last_word
           end
-
           a = @statetable[p_word]
           a << [n_word, last_word]
           @statetable[p_word] = a
