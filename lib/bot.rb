@@ -9,7 +9,7 @@ require 'mechanize'
 require 'bot/twitterapi'
 require 'bot/botconst'
 require 'bot/daemon'
-require 'bot/chain'
+require 'bot/marcov'
 
 module Bot
   $const = Bot::BotConst.new
