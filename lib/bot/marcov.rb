@@ -43,6 +43,7 @@ module Marcov
           a << h
           print i.to_s + ":"
           print a
+          print "\n"
           @statetable[p_word] = a
 
           # @statetable[p_word] << { n_word => last_word }
