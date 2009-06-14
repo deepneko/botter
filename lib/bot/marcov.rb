@@ -50,12 +50,12 @@ module Marcov
     def generate(nwords)
       prevs = @statetable.keys
       p_word = prevs[rand(prevs.size)]
-      print p_word
+      p p_word
       loop do
         nexts = @statetable[p_word]
         rand = rand(nexts.size)
         n_word = nexts[rand][0]
-        print n_word
+        p n_word
         break if @end.include?(n_word)
         p_word = nexts[rand][1]
       end
