@@ -10,6 +10,7 @@ require 'bot/twitterapi'
 require 'bot/botconst'
 require 'bot/daemon'
 require 'bot/marcov'
+$KCODE='u'
 
 module Bot
   $const = Bot::BotConst.new

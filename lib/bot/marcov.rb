@@ -9,7 +9,6 @@ module Bot
     end
 
     def build(str)
-      p CGI.unescapeHTML(str)
       @words = []
       @statetable = Hash.new{[]}
 
