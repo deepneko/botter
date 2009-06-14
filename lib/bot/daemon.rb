@@ -25,7 +25,7 @@ module Bot
               p "insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")"
               $con.execute("insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")")
 
-              @chain.build(CGI.unescapeHTML(tl["text"]).toutf8)
+              @chain.build(CGI.unescapeHTML(tl["text"]))
               @chain.learn
             rescue SQLite3::SQLException
               print "Exception:" + tl["status_id"] + " " + tl["screen_name"] + " " + tl["created_at"] + " " + tl["text"] + "\n"
