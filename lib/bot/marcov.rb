@@ -6,12 +6,15 @@ $KCODE = 'u'
 
 module Marcov
   WORD_SIZE = 4
+  WORD_NUM = 3
 
   class Chain
     def initialize
       @words = []
       @statetable = {}
       @statetable.default = []
+
+      @ignore = ["\n", ""]
     end
 
     def build(str)
@@ -19,7 +22,8 @@ module Marcov
         mecab = MeCab::Tagger.new(str)
         n = mecab.parseToNode(str)
         while n do
-          @words << n.surface.strip
+          word = n.surface.strip
+          @words << word unless @ignore.include?(word)
           n = n.next
         end
 
@@ -29,17 +33,16 @@ module Marcov
           n_word = @words[j]
           while n_word.split(//).size < WORD_SIZE
             j = j + 1
-            break if j-i > 3
+            break if j-i > WORD_NUM
             n_word += @words[j].to_s
           end
-          @statetable[p_word] << n_word if n_word
+          @statetable[p_word] << n_word
         end
 
-        @statetable.each do |a|
-          p a
-        end
+        p @words
+        p @statetable
       rescue
-        p "RuntimeError: ", $!;
+        print "Exception: ", $!;
       end
     end
 
