@@ -53,9 +53,9 @@ module Bot
               p "update p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
               $con.execute("update learn_ngram set score='#{cur[3].to_i+1}' where p_word='#{p_word}' and n_word='#{n_word}'")
             end
-          rescue SQLite3::SQLException
-            p "Exception p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
-            p $1
+          #rescue SQLite3::SQLException
+          #  p "Exception p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
+          #  p $1
           end
           exit
         end
