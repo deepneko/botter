@@ -1,23 +1,17 @@
-#!/usr/bin/env ruby
-
-require 'MeCab'
-require 'cgi'
-$KCODE = 'u'
-
-module Marcov
-  WORD_SIZE = 3
-  WORD_NUM = 3
-
+module Bot
   class Chain
     def initialize
       @words = []
-      @statetable = Hash.new { [] }
+      @statetable = Hash.new{[]}
 
       @ignore = ["", "\n", "/", "\"", "'", "`", "^", ".", ",", "[", "]", "「", "」", "(", ")", "｢", "｣", "{", "}", "（", "）", "【", "】", "<", ">", "‘", "’", "『", "』", "“", "”", "〔", "〕",]
       @end = ["。", " ", "　", "!", "！", "?", "？"]
     end
 
     def build(str)
+      @words = []
+      @statetable = Hash.new{[]}
+
       begin
         mecab = MeCab::Tagger.new(str)
         n = mecab.parseToNode(str)
@@ -31,9 +25,9 @@ module Marcov
           j = i + 1
           p_word = @words[i]
           n_word = last_word = @words[j]
-          while n_word.split(//).size < WORD_SIZE
+          while n_word.split(//).size < $const.MARCOV_WORD_SIZE
             j = j + 1
-            break if j-i > WORD_NUM
+            break if j-i > $const.MARCOV_WORD_NUM
             last_word = @words[j].to_s
             n_word += last_word
           end
@@ -47,7 +41,20 @@ module Marcov
       end
     end
 
-    def generate(nwords)
+    def learn
+      @statetable.keys.each do |p_word, nexts|
+        nexts.each do |n_word, last_word|
+          cur = $con.execute("select * from learn_ngram where word=#{p_word} and #{last_word}").flatten
+          if cur.size == 0
+            $con.execute("insert into learn_ngram (word, next, last, score) values (p_word, n_word, last_word, 1)")
+          else
+            $con.execute("update learn_ngram set score=#{cur[3].to_i+1} where p_word=#{p_word} and n_word=#{n_word}")
+          end
+        end
+      end
+    end
+
+    def generate_test(nwords)
       prevs = @statetable.keys
       p_word = prevs[rand(prevs.size)]
       p p_word
@@ -63,12 +70,18 @@ module Marcov
     end
   end
 
-  def self.markov(data, nwords=10000)
+  def self.learn(data)
     chain = Chain.new
     chain.build(data)
-    chain.generate(nwords)
+    chain.learn
+  end
+
+  def self.test(data, nwords=10000)
+    chain = Chain.new
+    chain.build(data)
+    chain.generate_test(nwords)
   end
 end
 
-Marcov.markov(open($*[0]).read, $*[1].to_i)
+Marcov.test(open($*[0]).read, $*[1].to_i)
 

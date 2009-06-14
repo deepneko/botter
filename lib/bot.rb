@@ -1,4 +1,5 @@
 require 'cgi'
+require 'MeCab'
 require 'kconv'
 require 'rubygems'
 require 'sqlite3'
@@ -8,6 +9,7 @@ require 'mechanize'
 require 'bot/twitterapi'
 require 'bot/botconst'
 require 'bot/daemon'
+require 'bot/chain'
 
 module Bot
   $const = Bot::BotConst.new
@@ -15,10 +17,8 @@ module Bot
 
   def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
     twitter_client = Bot::TwitterAPI.new(user, pass)
-    bot = Bot::Daemon.new(twitter_client)
-    #1.upto($const.PAGE_HISTORY) do |page|
-    #  p twitter_client.friends_timeline(page, 897098556)
-    #end
+    chain = Chain.new
+    bot = Bot::Daemon.new(twitter_client, chain)
     bot.start
   end
 
@@ -40,7 +40,7 @@ module Bot
   def self.createtable
     begin
       $con.execute('create table friends_timeline(status_id, screen_name, created_at, text)')
-      #$con.execute('create table update(status_id, reply_to)')
+      $con.execute('create table learn_ngram(word, next, last, score)')
     rescue SQLite3::SQLException
       "tables already exist"
     end

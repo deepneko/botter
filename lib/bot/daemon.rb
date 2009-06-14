@@ -1,38 +1,40 @@
 module Bot
   class Daemon
-    def initialize(twc)
+    def initialize(twc, chain)
       @twitter_client = twc
+      @marcov_chain = chain
     end
 
     # main loop
     def start
-      #daemon {
-        while true
-          update_status = []
+      while true
+        update_status = []
+        
+        Thread.new do
+          last_status = $con.execute('select status_id from friends_timeline order by status_id desc limit 1').flatten
+          1.upto $const.PAGE_HISTORY do |i|
+            tl_a = @twitter_client.friends_timeline(i, last_status)
+            p tl_a
+            break if tl_a.size == 0
+            update_status.concat(tl_a)
+            break if tl_a.size < 20 and tl_a.size > 0
+          end
           
-          Thread.new do
-            last_status = $con.execute('select status_id from friends_timeline order by status_id desc limit 1').flatten
-            1.upto $const.PAGE_HISTORY do |i|
-              tl_a = @twitter_client.friends_timeline(i, last_status)
-              p tl_a
-              break if tl_a.size == 0
-              update_status.concat(tl_a)
-              break if tl_a.size < 20 and tl_a.size > 0
-            end
+          update_status.each do |tl|
+            begin
+              p "insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")"
+              $con.execute("insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")")
 
-            update_status.each do |tl|
-              begin
-                p "insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")"
-                $con.execute("insert into friends_timeline(status_id, screen_name, created_at, text) values ('#{tl["status_id"]}', '#{tl["screen_name"]}', '#{tl["created_at"]}', \"#{tl["text"]}\")")
-              rescue SQLite3::SQLException
-                print "Exception:" + tl["status_id"] + " " + tl["screen_name"] + " " + tl["created_at"] + " " + tl["text"] + "\n"
-              end
+              chain.build(tl["text"])
+              chain.learn
+            rescue SQLite3::SQLException
+              print "Exception:" + tl["status_id"] + " " + tl["screen_name"] + " " + tl["created_at"] + " " + tl["text"] + "\n"
             end
           end
-
-          sleep($const.SLEEP_TIME)
         end
-      #}
+        
+        sleep($const.SLEEP_TIME)
+      end
     end
 
     # TODO
