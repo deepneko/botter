@@ -83,5 +83,5 @@ module Bot
   end
 end
 
-Marcov.test(open($*[0]).read, $*[1].to_i)
+Bot.test(open($*[0]).read, $*[1].to_i)
 
