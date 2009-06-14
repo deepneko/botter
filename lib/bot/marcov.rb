@@ -55,6 +55,7 @@ module Bot
             end
           rescue SQLite3::SQLException
             p "Exception p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
+            p $1
           end
           exit
         end
