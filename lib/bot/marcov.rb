@@ -39,7 +39,7 @@ module Marcov
           end
 
           a = @statetable[p_word]
-          a << {n_word => last_word}
+          a << [n_word, last_word]
           @statetable[p_word] = a
         end
       rescue
@@ -52,8 +52,8 @@ module Marcov
       p_word = prevs[rand(prevs.size)]
       print p_word
       loop do
-        nexts = @statetable[p_word].keys
-        n_word = nexts[rand(nexts.size)]
+        nexts = @statetable[p_word]
+        n_word = nexts[rand(nexts.size)][0]
         print n_word
         break if @end.include?(n_word)
         p_word = @statetable[p_word][n_word]
