@@ -53,10 +53,11 @@ module Marcov
       print p_word
       loop do
         nexts = @statetable[p_word]
-        n_word = nexts[rand(nexts.size)][0]
+        rand = rand(nexts.size)
+        n_word = nexts[rand][0]
         print n_word
         break if @end.include?(n_word)
-        p_word = @statetable[p_word][n_word]
+        p_word = nexts[rand][1]
       end
       print "\n"
     end
