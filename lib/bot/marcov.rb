@@ -46,15 +46,15 @@ module Bot
         @statetable[p_word].each do |n_word, last_word|
           begin
             cur = $con.execute("select * from learn_ngram where word=#{p_word} and #{last_word}").flatten
-            p cur
-            p "p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
             if cur.size == 0
+              p "insert p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
               $con.execute("insert into learn_ngram (word, next, last, score) values (#{p_word}, #{n_word}, #{last_word}, 1)")
             else
+              p "update p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
               $con.execute("update learn_ngram set score=#{cur[3].to_i+1} where p_word=#{p_word} and n_word=#{n_word}")
             end
           rescue SQLite3::SQLException
-            p "p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
+            p "Exception p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
           end
           exit
         end
