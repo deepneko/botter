@@ -33,8 +33,9 @@ module Marcov
             n_word += @words[j].to_s
           end
           @statetable[p_word] << n_word if n_word
-          p n_word
         end
+
+        p @statetable
       rescue
         p "RuntimeError: ", $!;
       end
