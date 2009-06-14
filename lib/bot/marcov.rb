@@ -42,8 +42,6 @@ module Bot
     end
 
     def learn
-      p @statetable
-      exit
       @statetable.keys.each do |p_word, nexts|
         nexts.each do |n_word, last_word|
           begin
@@ -58,6 +56,7 @@ module Bot
           rescue SQLite3::SQLException
             p "p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
           end
+          exit
         end
       end
     end
