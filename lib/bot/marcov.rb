@@ -13,7 +13,7 @@ module Marcov
       @words = []
       @statetable = {}
       @statetable.default = []
-      @ignore = ["\n", "/", "\"", "'", "`", "^", ".", ",", "[", "]", "「", "」", "(", ")", "｢", "｣", "{", "}"]
+      @ignore = ["", "\n", "/", "\"", "'", "`", "^", ".", ",", "[", "]", "「", "」", "(", ")", "｢", "｣", "{", "}"]
     end
 
     def build(str)
@@ -47,7 +47,7 @@ module Marcov
 
     def ignore(word)
       return false if @ignore.include?(word)
-      return false if @words ~= /^[-.0-9]$/
+      return false if word =~ /^[-.0-9]$/
     end
 
     def generate(nwords)
