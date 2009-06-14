@@ -42,13 +42,20 @@ module Bot
     end
 
     def learn
+      p @statetable
       @statetable.keys.each do |p_word, nexts|
         nexts.each do |n_word, last_word|
-          cur = $con.execute("select * from learn_ngram where word=#{p_word} and #{last_word}").flatten
-          if cur.size == 0
-            $con.execute("insert into learn_ngram (word, next, last, score) values (p_word, n_word, last_word, 1)")
-          else
-            $con.execute("update learn_ngram set score=#{cur[3].to_i+1} where p_word=#{p_word} and n_word=#{n_word}")
+          begin
+            cur = $con.execute("select * from learn_ngram where word=#{p_word} and #{last_word}").flatten
+            p cur
+            p "p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
+            if cur.size == 0
+              $con.execute("insert into learn_ngram (word, next, last, score) values (#{p_word}, #{n_word}, #{last_word}, 1)")
+            else
+              $con.execute("update learn_ngram set score=#{cur[3].to_i+1} where p_word=#{p_word} and n_word=#{n_word}")
+            end
+          rescue SQLite3::SQLException
+            p "p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
           end
         end
       end
