@@ -41,7 +41,8 @@ module Marcov
           h = { n_word => last_word }
           a = @statetable[p_word]
           a << h
-          p i.to_s + ":" + a
+          print i.to_s + ":"
+          print a
           @statetable[p_word] = a
 
           # @statetable[p_word] << { n_word => last_word }
