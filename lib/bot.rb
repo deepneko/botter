@@ -41,9 +41,14 @@ module Bot
   def self.createtable
     begin
       $con.execute('create table friends_timeline(status_id, screen_name, created_at, text)')
+    rescue SQLite3::SQLException
+      "friends timeline tables already exist"
+    end
+
+    begin
       $con.execute('create table learn_ngram(word, next, last, score)')
     rescue SQLite3::SQLException
-      "tables already exist"
+      "learn tables already exist"
     end
   end
 end
