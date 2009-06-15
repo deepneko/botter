@@ -48,7 +48,7 @@ module Bot
       @statetable.keys.each do |p_word|
         @statetable[p_word].each do |n_word, last_word|
           begin
-            cur = $con.execute("select * from learn_ngram where word='#{p_word}' and next='#{last_word}'").flatten
+            cur = $con.execute("select * from learn_ngram where word='#{p_word}' and next='#{n_word}'").flatten
             if cur.size == 0
               p "insert p_word:" + p_word + " n_word:" + n_word + " last_word:" + last_word
               $con.execute("insert into learn_ngram (word, next, last, score) values ('#{p_word}', '#{n_word}', '#{last_word}', '1')")
