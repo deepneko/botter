@@ -64,7 +64,8 @@ module Bot
     end
     
     def generate(nwords)
-      num_row = $con.execute("select count(*) from learn_ngram").flatten.flatten
+      num_row = $con.execute("select count(*) from learn_ngram").flatten.first
+      p num_row
 
       feature = nil
       while feature != $const.NOUN do
