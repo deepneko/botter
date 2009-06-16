@@ -75,6 +75,7 @@ module Bot
         p n.feature
         feature = n.feature.split(/,/)[0]
 
+        p mecab.parse(prev_word)
         p prev_word
         p feature
       end
