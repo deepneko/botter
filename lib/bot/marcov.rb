@@ -85,6 +85,7 @@ module Bot
           end
         end
         random = rand(cur.size)
+        p cur
         n_word = cur[random][1]
         prev_word = cur[random][2]
         print n_word
