@@ -75,7 +75,7 @@ module Bot
         feature = n.split(/\t/)[1].split(/,/)[0]
       end
 
-      while @end.include?(prev_word)
+      while !@end.include?(prev_word) do
         cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
         choice = cur.dup
         cur.size.times do |i|
