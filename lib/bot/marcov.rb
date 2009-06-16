@@ -70,6 +70,7 @@ module Bot
       while feature != $const.NOUN do
         cur = $con.execute("select * from learn_ngram where rowid=#{rand(num_row)}")
         prev_word = cur[0]
+        p prev_word
         mecab = MeCab::Tagger.new(prev_word)
         n = mecab.parseToNode(prev_word)
         feature = n.feature.split(/,/)[0]
