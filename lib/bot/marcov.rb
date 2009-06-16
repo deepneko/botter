@@ -72,8 +72,7 @@ module Bot
         prev_word = cur[0]
         mecab = MeCab::Tagger.new(prev_word)
         n = mecab.parse(prev_word)
-        p n.feature
-        feature = n.feature.splite(/\t/)[0].split(/,/)[0]
+        feature = n.splite(/\t/)[0].split(/,/)[0]
 
         p prev_word
         p feature
