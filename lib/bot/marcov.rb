@@ -78,7 +78,7 @@ module Bot
       cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
       choice = cur.dup
       cur.size.times do |i|
-        (cur[i][3] - 1).times do 
+        (cur[i][3].to_i - 1).times do 
           choice << cur[i]
         end
       end
