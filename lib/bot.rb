@@ -46,7 +46,7 @@ module Bot
 
   def self.generate
     chain = Bot::Chain.new
-    chain.generate
+    chain.generate(20)
   end
 
   def self.createtable
