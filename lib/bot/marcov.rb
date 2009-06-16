@@ -64,6 +64,7 @@ module Bot
     end
     
     def generate(nwords)
+      update = ""
       num_row = $con.execute("select count(*) from learn_ngram").flatten.first
 
       feature = nil
@@ -75,7 +76,7 @@ module Bot
         feature = n.split(/\t/)[1].split(/,/)[0]
       end
 
-      print prev_word
+      update += prev_word
       while !@end.include?(prev_word) do
         cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
         choice = cur.dup
@@ -86,9 +87,8 @@ module Bot
         end
         random = rand(cur.size)
         p cur
-        n_word = cur[random][1]
+        update += cur[random][1]
         prev_word = cur[random][2]
-        print n_word
       end
     end
 
