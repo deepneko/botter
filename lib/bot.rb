@@ -16,11 +16,17 @@ module Bot
   $const = Bot::BotConst.new
   $con = SQLite3::Database.new($const.DB)
 
-  def self.start(user, pass, sleep_time=$const.SLEEP_TIME)
+  def self.start(user, pass, sleep_time=$const.SLEEP_TIME, say=nil)
     twitter_client = Bot::TwitterAPI.new(user, pass)
     chain = Chain.new
     bot = Bot::Daemon.new(twitter_client, chain)
-    bot.start
+
+    if say
+      #bot.start_say
+      self.generate
+    else
+      bot.start
+    end
   end
 
   def self.tl(page, tlnum=100)
@@ -36,6 +42,11 @@ module Bot
   def self.update(user, pass, comment)
     twitter_client = Bot::TwitterAPI.new(user, pass)
     twitter_client.update(comment)
+  end
+
+  def self.generate
+    chain = Bot::Chain.new
+    chain.generate
   end
 
   def self.createtable

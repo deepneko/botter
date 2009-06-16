@@ -13,12 +13,19 @@ begin
   OptionParser.new do |opt|
     opt.on('-u VALUE') {|v| getopt[:u] = v }
     opt.on('-p VALUE') {|v| getopt[:p] = v }
+    opt.on('-s VALUE') {|v| getopt[:s] = v }
     opt.parse!(ARGV)
   end
 rescue
   p "usage: ./server.rb -u [user name] -p [password]"
+  p "usage: ./server.rb -u [user name] -p [password] -s [any]"
   exit! 0
 end
 
 # start server
-Bot.start(getopt[:u], getopt[:p], 30)
+if getopt[:s]
+  Bot.start(getopt[:u], getopt[:p], 30, getopt[:s])
+else
+  Bot.start(getopt[:u], getopt[:p], 30)
+end
+
