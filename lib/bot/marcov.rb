@@ -73,10 +73,17 @@ module Bot
         mecab = MeCab::Tagger.new(prev_word)
         n = mecab.parse(prev_word)
         feature = n.split(/\t/)[1].split(/,/)[0]
-
-        p prev_word
-        p feature
       end
+
+      cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
+      choice = cur.dup
+      cur.size.times do |i|
+        (cur[i][3] - 1).times do 
+          choice << cur[i]
+        end
+      end
+      p cur
+      p choice
     end
 
     def generate_test(nwords)
