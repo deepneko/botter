@@ -75,15 +75,17 @@ module Bot
         feature = n.split(/\t/)[1].split(/,/)[0]
       end
 
-      cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
-      choice = cur.dup
-      cur.size.times do |i|
-        (cur[i][3].to_i - 1).times do 
-          choice << cur[i]
+      while @end.include?(prev_word)
+        cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
+        choice = cur.dup
+        cur.size.times do |i|
+          (cur[i][3].to_i - 1).times do 
+            choice << cur[i]
+          end
         end
+        print prev_word
+        prev_word = cur[rand(cur.size)][0]
       end
-      p cur
-      p choice
     end
 
     def generate_test(nwords)
