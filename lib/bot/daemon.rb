@@ -37,6 +37,15 @@ module Bot
       end
     end
 
+    def start_say
+      while true
+        Thread.new do 
+          @twitter_client.update(@chain.generate)
+        end
+        sleep($const.SLEEP_TIME)
+      end
+    end
+
     # TODO
     def stop
     end

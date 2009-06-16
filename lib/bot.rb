@@ -22,8 +22,8 @@ module Bot
     bot = Bot::Daemon.new(twitter_client, chain)
 
     if say
-      #bot.start_say
-      self.generate
+      bot.start_say
+      #self.generate
     else
       bot.start
     end
@@ -46,7 +46,7 @@ module Bot
 
   def self.generate
     chain = Bot::Chain.new
-    chain.generate(20)
+    chain.generate
   end
 
   def self.createtable

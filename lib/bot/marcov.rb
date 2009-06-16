@@ -63,7 +63,7 @@ module Bot
       end
     end
     
-    def generate(nwords)
+    def generate
       update = ""
       num_row = $con.execute("select count(*) from learn_ngram").flatten.first
 
@@ -79,6 +79,9 @@ module Bot
       update += prev_word
       while !@end.include?(prev_word) do
         cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
+        if cur.flatten.size == 0
+          return update
+        end
         choice = cur.dup
         cur.size.times do |i|
           (cur[i][3].to_i - 1).times do 
@@ -86,12 +89,10 @@ module Bot
           end
         end
         random = rand(cur.size)
-        p cur
         update += cur[random][1]
         prev_word = cur[random][2]
       end
-
-      p update
+      update
     end
 
     def generate_test(nwords)
