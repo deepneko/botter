@@ -62,6 +62,19 @@ module Bot
         end
       end
     end
+    
+    def generate(nwords)
+      num_row = $con.execute("select count(*) from learn_ngram").flatten.flatten
+
+      feature = nil
+      while feature != $const.NOUN do
+        cur = $con.execute("select * from learn_ngram where rowid=#{rand(num_row)}")
+        prev_word = cur[0]
+        mecab = MeCab::Tagger.new(prev_word)
+        n = mecab.parseToNode(mecab)
+        feature = n.feature.split(/,/)[0]
+      end
+    end
 
     def generate_test(nwords)
       prevs = @statetable.keys
