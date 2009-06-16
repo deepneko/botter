@@ -75,6 +75,7 @@ module Bot
         feature = n.split(/\t/)[1].split(/,/)[0]
       end
 
+      print prev_word
       while !@end.include?(prev_word) do
         cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
         choice = cur.dup
@@ -83,8 +84,10 @@ module Bot
             choice << cur[i]
           end
         end
-        print prev_word
-        prev_word = cur[rand(cur.size)][0]
+        random = rand(cur.size)
+        n_word = cur[random][1]
+        prev_word = cur[random][2]
+        print n_word
       end
     end
 
