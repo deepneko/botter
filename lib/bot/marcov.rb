@@ -71,11 +71,10 @@ module Bot
         cur = $con.execute("select * from learn_ngram where rowid=#{rand(num_row)}").flatten
         prev_word = cur[0]
         mecab = MeCab::Tagger.new(prev_word)
-        n = mecab.parseToNode(prev_word)
+        n = mecab.parse(prev_word)
         p n.feature
-        feature = n.feature.split(/,/)[0]
+        feature = n.feature.splite(/\t/)[0].split(/,/)[0]
 
-        p mecab.parse(prev_word)
         p prev_word
         p feature
       end
