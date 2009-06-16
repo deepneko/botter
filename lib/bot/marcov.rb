@@ -90,6 +90,8 @@ module Bot
         update += cur[random][1]
         prev_word = cur[random][2]
       end
+
+      p update
     end
 
     def generate_test(nwords)
