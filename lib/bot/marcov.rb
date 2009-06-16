@@ -80,7 +80,7 @@ module Bot
       while !@end.include?(prev_word) do
         cur = $con.execute("select * from learn_ngram where word='#{prev_word}'")
         if cur.flatten.size == 0
-          return update
+          return nil
         end
         choice = cur.dup
         cur.size.times do |i|

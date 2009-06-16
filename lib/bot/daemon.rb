@@ -40,7 +40,9 @@ module Bot
     def start_say
       while true
         Thread.new do 
-          @twitter_client.update(@chain.generate)
+          say = @chain.generate until say
+          p say
+          @twitter_client.update(say)
         end
         sleep($const.SLEEP_TIME)
       end
